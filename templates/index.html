@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Market Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        input, button {
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        input {
+            width: 60%;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>📊 Stock Market Tracker</h1>
+
+<form method="POST">
+    <input
+        type="text"
+        name="symbol"
+        placeholder="Stock symbol e.g. AAPL"
+        value="{{ result.symbol if result and result.symbol else 'AAPL' }}"
+        required
+    >
+    <button type="submit">Check</button>
+</form>
+
+{% if result %}
+
+<div class="result">
+
+    {% if result.error %}
+
+        <h3>❌ Error</h3>
+        <p>{{ result.error }}</p>
+
+    {% else %}
+
+        <h2>{{ result.symbol }}</h2>
+
+        <p>
+            Current Price:
+            <strong>${{ result.price }}</strong>
+        </p>
+
+        <p>5-Day Average: ${{ result.ma5 }}</p>
+        <p>20-Day Average: ${{ result.ma20 }}</p>
+
+        <h2>{{ result.signal }}</h2>
+
+    {% endif %}
+
+</div>
+
+{% endif %}
+
+</body>
+</html>
